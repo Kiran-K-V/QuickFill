@@ -11,9 +11,34 @@ class VoiceFormFiller {
   }
 
   // Initialize the class when injected
-  init() {
+  async init() {
     console.log('[VoiceFormFiller] Initializing on page:', window.location.href);
     this.setupMessageListener();
+    // Autofill with profile data if enabled
+    try {
+      if (window.StorageManager && window.FormDetector && window.FieldMapper && window.FormFiller) {
+        const storage = new window.StorageManager();
+        const profile = await storage.getProfile();
+        if (profile) {
+          const entities = profileToEntities(profile);
+          const detector = new window.FormDetector();
+          const { forms, standaloneFields } = detector.scanForms();
+          const fields = forms.length ? forms[0].fields : standaloneFields;
+          const mapper = new window.FieldMapper(fields);
+          const mappings = mapper.mapEntitiesToFields(entities).map(m => ({
+            field: m.bestMatch.field,
+            value: m.entity.value
+          }));
+          const filler = new window.FormFiller();
+          await filler.fillFields(mappings);
+          console.log('[VoiceFormFiller] Autofilled form with profile data.');
+        }
+      } else {
+        console.error('[VoiceFormFiller] Required modules not loaded in init');
+      }
+    } catch (err) {
+      console.error('[VoiceFormFiller] Autofill error:', err);
+    }
     // Placeholder: Initialize other components if needed
   }
 
@@ -28,9 +53,49 @@ class VoiceFormFiller {
           sendResponse({ status: 'Voice trigger handled' });
         }
         // Add more message handlers as needed
+        if (message && message.action === 'triggerProfileFill') {
+          this.fillFromProfile().then(() => {
+            sendResponse({ status: 'Profile fill complete' });
+          }).catch((err) => {
+            sendResponse({ status: 'Profile fill error', error: err?.toString() });
+          });
+          return true; // async
+        }
       });
     } catch (err) {
       console.error('[VoiceFormFiller] Error setting up message listener:', err);
+    }
+  }
+
+  // Fill form from stored profile data (regardless of autofill preference)
+  async fillFromProfile() {
+    try {
+      if (window.StorageManager && window.FormDetector && window.FieldMapper && window.FormFiller) {
+        const storage = new window.StorageManager();
+        const profile = await storage.getProfile();
+        console.log('[VoiceFormFiller] Profile loaded for fill:', profile);
+        if (profile) {
+          const entities = profileToEntities(profile);
+          const detector = new window.FormDetector();
+          const { forms, standaloneFields } = detector.scanForms();
+          const fields = forms.length ? forms[0].fields : standaloneFields;
+          const mapper = new window.FieldMapper(fields);
+          const mappings = mapper.mapEntitiesToFields(entities).map(m => ({
+            field: m.bestMatch.field,
+            value: m.entity.value
+          }));
+          const filler = new window.FormFiller();
+          await filler.fillFields(mappings);
+          console.log('[VoiceFormFiller] Filled form from profile data (manual trigger).');
+        } else {
+          throw new Error('No profile data found');
+        }
+      } else {
+        throw new Error('Required modules not loaded');
+      }
+    } catch (err) {
+      console.error('[VoiceFormFiller] fillFromProfile error:', err);
+      throw err;
     }
   }
 
@@ -87,6 +152,17 @@ class VoiceFormFiller {
       console.error('[VoiceFormFiller] Error handling voice trigger:', err);
     }
   }
+}
+
+// Utility: Convert profile object to entities for FieldMapper
+function profileToEntities(profile) {
+  if (!profile) return [];
+  const fields = ['name', 'email', 'phone', 'address'];
+  return fields.filter(f => profile[f]).map(f => ({
+    type: f,
+    value: profile[f],
+    confidence: 1.0
+  }));
 }
 
 // Initialize the VoiceFormFiller when the script is injected

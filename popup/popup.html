@@ -10,9 +10,12 @@
   <div id="popup-root">
     <div class="mic-icon" aria-label="Microphone" tabindex="0">🎤</div>
     <button id="voice-fill-btn">Start Voice Fill</button>
+    <button id="profile-fill-btn">Fill From Profile</button>
     <div id="status"></div>
-    <a href="../options/options.html" target="_blank" id="settings-link">Settings</a>
+    <button id="settings-toggle-btn">Settings</button>
+    <div id="settings-container" style="display:none;"></div>
   </div>
+  <script src="../lib/storage-manager.js"></script>
   <script src="popup.js"></script>
 </body>
 </html> 

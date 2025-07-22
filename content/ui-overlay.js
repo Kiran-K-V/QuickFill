@@ -74,25 +74,42 @@ class UIOverlay {
   }
 
   async submitTranscript() {
-    this.overlay.querySelector('#voice-status').textContent = 'Analyzing and filling form...';
-    // Use VoiceProcessor to extract entities
-    const entities = await this.voiceProcessor.extractEntities(this.transcript);
-    // Use FormDetector and FieldMapper to fill the form
-    if (window.FormDetector && window.FieldMapper && window.FormFiller) {
-      const detector = new window.FormDetector();
-      const { forms, standaloneFields } = detector.scanForms();
-      // For demo, fill the first form found
-      const fields = forms.length ? forms[0].fields : standaloneFields;
-      const mapper = new window.FieldMapper(fields);
-      const mappings = mapper.mapEntitiesToFields(entities).map(m => ({
-        field: m.bestMatch.field,
-        value: m.entity.value
-      }));
-      const filler = new window.FormFiller();
-      await filler.fillFields(mappings);
-      this.overlay.querySelector('#voice-status').textContent = 'Form filled!';
-    } else {
-      this.overlay.querySelector('#voice-status').textContent = 'Form filling modules not loaded.';
+    this.overlay.querySelector('#voice-status').textContent = 'Processing with Gemini...';
+    try {
+      const transcript = this.transcript;
+      // 1. LLM extraction
+      const profile = await window.extractProfileFromText(transcript);
+      if (!profile) {
+        this.overlay.querySelector('#voice-status').textContent = 'Could not extract profile from voice. Try again.';
+        return;
+      }
+      // 2. Save profile
+      if (window.StorageManager) {
+        const storage = new window.StorageManager();
+        await storage.saveProfile({ id: 'default', ...profile });
+        this.overlay.querySelector('#voice-status').textContent = 'Profile saved from voice!';
+      } else {
+        this.overlay.querySelector('#voice-status').textContent = 'StorageManager not loaded!';
+        return;
+      }
+      // 3. Autofill
+      if (window.FormDetector && window.FieldMapper && window.FormFiller) {
+        const detector = new window.FormDetector();
+        const { forms, standaloneFields } = detector.scanForms();
+        const fields = forms.length ? forms[0].fields : standaloneFields;
+        const entities = Object.entries(profile).map(([type, value]) => ({ type, value, confidence: 1.0 }));
+        const mapper = new window.FieldMapper(fields);
+        const mappings = mapper.mapEntitiesToFields(entities).map(m => ({
+          field: m.bestMatch.field,
+          value: m.entity.value
+        }));
+        const filler = new window.FormFiller();
+        await filler.fillFields(mappings);
+        this.overlay.querySelector('#voice-status').textContent = 'Form filled and profile saved!';
+      }
+    } catch (err) {
+      this.overlay.querySelector('#voice-status').textContent = 'Error: ' + (err.message || err);
+      console.error('Voice-to-profile error:', err);
     }
   }
 }
