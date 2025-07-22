@@ -1,0 +1,57 @@
+/* popup/popup.css */
+body {
+  min-width: 220px;
+  min-height: 180px;
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #fff;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#popup-root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.mic-icon {
+  font-size: 2.5rem;
+  margin-top: 10px;
+  color: #e74c3c;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.mic-icon:focus, .mic-icon:hover {
+  color: #c0392b;
+  outline: 2px solid #e74c3c;
+}
+#voice-fill-btn {
+  padding: 8px 18px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #e74c3c;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#voice-fill-btn:hover, #voice-fill-btn:focus {
+  background: #c0392b;
+}
+#status {
+  min-height: 20px;
+  font-size: 0.95em;
+  color: #888;
+}
+#settings-link {
+  font-size: 0.95em;
+  color: #3498db;
+  text-decoration: none;
+  margin-top: 8px;
+}
+#settings-link:hover, #settings-link:focus {
+  text-decoration: underline;
+} 

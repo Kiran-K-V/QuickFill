@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Voice Form Filler",
+  "description": "A production-ready, voice-activated Chrome extension for fast, secure, and intelligent form filling on any website.",
+  "version": "1.0.0",
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "lib/voice-processor.js",
+        "lib/field-mapper.js",
+        "content/form-detector.js",
+        "content/form-filler.js",
+        "content/ui-overlay.js",
+        "content/content-script.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "activate-voice-fill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V"
+      },
+      "description": "Activate voice form filling"
+    }
+  }
+} 

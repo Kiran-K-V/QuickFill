@@ -1,0 +1,106 @@
+<!-- test/test-form.html -->
+<!-- Comprehensive test forms for form detection -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Detection Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    form { margin-bottom: 2em; padding: 1em; border: 1px solid #ccc; border-radius: 8px; }
+    label { display: block; margin-top: 0.5em; }
+    input, select, textarea { margin-top: 0.2em; width: 300px; }
+  </style>
+</head>
+<body>
+  <h1>Form Detection Test Page</h1>
+
+  <!-- Contact Form -->
+  <form id="contact-form">
+    <h2>Contact Form</h2>
+    <label for="contact-name">Name</label>
+    <input type="text" id="contact-name" name="name" placeholder="Your Name">
+    <label for="contact-email">Email</label>
+    <input type="email" id="contact-email" name="email" placeholder="you@example.com">
+    <label for="contact-phone">Phone</label>
+    <input type="tel" id="contact-phone" name="phone" placeholder="123-456-7890">
+    <button type="submit">Send</button>
+  </form>
+
+  <!-- Registration Form -->
+  <form id="registration-form">
+    <h2>Registration Form</h2>
+    <label for="reg-username">Username</label>
+    <input type="text" id="reg-username" name="username" placeholder="Choose a username">
+    <label for="reg-password">Password</label>
+    <input type="password" id="reg-password" name="password" placeholder="Create a password">
+    <label for="reg-email">Email Address</label>
+    <input type="email" id="reg-email" name="reg_email" placeholder="user@domain.com">
+    <label for="reg-dob">Date of Birth</label>
+    <input type="date" id="reg-dob" name="dob">
+    <button type="submit">Register</button>
+  </form>
+
+  <!-- Address Form -->
+  <form id="address-form">
+    <h2>Address Form</h2>
+    <label for="addr-line1">Address Line 1</label>
+    <input type="text" id="addr-line1" name="address1" placeholder="123 Main St">
+    <label for="addr-line2">Address Line 2</label>
+    <input type="text" id="addr-line2" name="address2" placeholder="Apt, Suite, etc.">
+    <label for="addr-city">City</label>
+    <input type="text" id="addr-city" name="city" placeholder="City">
+    <label for="addr-state">State</label>
+    <input type="text" id="addr-state" name="state" placeholder="State">
+    <label for="addr-zip">ZIP Code</label>
+    <input type="text" id="addr-zip" name="zip" placeholder="ZIP Code">
+    <label for="addr-country">Country</label>
+    <select id="addr-country" name="country">
+      <option value="">Select Country</option>
+      <option value="us">United States</option>
+      <option value="ca">Canada</option>
+      <option value="uk">United Kingdom</option>
+    </select>
+    <button type="submit">Save Address</button>
+  </form>
+
+  <!-- Mixed Field Types Form -->
+  <form id="mixed-form">
+    <h2>Mixed Field Types</h2>
+    <label for="mixed-text">Text Field</label>
+    <input type="text" id="mixed-text" name="mixed_text" placeholder="Text">
+    <label for="mixed-number">Number Field</label>
+    <input type="number" id="mixed-number" name="mixed_number" placeholder="42">
+    <label for="mixed-checkbox">Subscribe</label>
+    <input type="checkbox" id="mixed-checkbox" name="subscribe">
+    <label for="mixed-radio1">Option 1</label>
+    <input type="radio" id="mixed-radio1" name="mixed_radio" value="1">
+    <label for="mixed-radio2">Option 2</label>
+    <input type="radio" id="mixed-radio2" name="mixed_radio" value="2">
+    <label for="mixed-textarea">Comments</label>
+    <textarea id="mixed-textarea" name="comments" placeholder="Your comments..."></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Unusual Naming Conventions Form -->
+  <form id="unusual-form">
+    <h2>Unusual Naming Conventions</h2>
+    <label for="foo">Full Name</label>
+    <input type="text" id="foo" name="usr_fullname" placeholder="Full Name">
+    <label for="bar">Electronic Mail</label>
+    <input type="email" id="bar" name="mailbox" placeholder="Email">
+    <label for="baz">Cellular</label>
+    <input type="tel" id="baz" name="cellular" placeholder="Phone">
+    <label for="qux">Secret</label>
+    <input type="password" id="qux" name="secretword" placeholder="Password">
+    <button type="submit">Go</button>
+  </form>
+
+  <!-- Standalone Fields -->
+  <label for="standalone1">Standalone Email</label>
+  <input type="email" id="standalone1" name="standalone_email" placeholder="Standalone Email">
+  <label for="standalone2">Standalone Text</label>
+  <input type="text" id="standalone2" name="standalone_text" placeholder="Standalone Text">
+
+</body>
+</html> 

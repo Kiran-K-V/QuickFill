@@ -1,0 +1,69 @@
+<!-- options/options.html -->
+<!-- Options page for Voice Form Filler Chrome extension. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Voice Form Filler – Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <main id="options-root">
+    <h1>Voice Form Filler Settings</h1>
+    <section id="profile-section">
+      <h2>User Profile</h2>
+      <form id="profile-form" autocomplete="off">
+        <label>Name <input type="text" id="profile-name" name="name" required></label>
+        <label>Email <input type="email" id="profile-email" name="email" required></label>
+        <label>Phone <input type="tel" id="profile-phone" name="phone"></label>
+        <label>Address <input type="text" id="profile-address" name="address"></label>
+        <button type="submit">Save Profile</button>
+      </form>
+    </section>
+    <section id="prefs-section">
+      <h2>Preferences</h2>
+      <label><input type="checkbox" id="pref-autofill"> Enable voice autofill</label>
+      <label><input type="checkbox" id="pref-history"> Save form history</label>
+      <label for="theme-select">Theme
+        <select id="theme-select">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="system">System</option>
+        </select>
+      </label>
+      <label for="font-size">Font Size
+        <input type="range" id="font-size" min="14" max="22" value="16">
+      </label>
+    </section>
+    <section id="shortcut-section">
+      <h2>Keyboard Shortcut</h2>
+      <label for="shortcut-input">Trigger Voice Fill:
+        <input type="text" id="shortcut-input" value="Ctrl+Shift+V" readonly>
+      </label>
+      <button id="change-shortcut">Change Shortcut</button>
+    </section>
+    <section id="history-section">
+      <h2>Form History</h2>
+      <ul id="history-list"></ul>
+      <button id="clear-history">Clear History</button>
+    </section>
+    <section id="import-export-section">
+      <h2>Data Import/Export</h2>
+      <button id="export-data">Export Data</button>
+      <input type="file" id="import-file" accept="application/json" style="display:none">
+      <button id="import-data">Import Data</button>
+    </section>
+    <section id="privacy-section">
+      <h2>Privacy & Data</h2>
+      <button id="delete-profile">Delete Profile</button>
+      <button id="delete-all-data">Delete All Data</button>
+    </section>
+    <section id="accessibility-section">
+      <h2>Accessibility</h2>
+      <label><input type="checkbox" id="high-contrast"> High Contrast Mode</label>
+      <label><input type="checkbox" id="screen-reader"> Enable Screen Reader Support</label>
+    </section>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html> 
