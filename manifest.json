@@ -11,6 +11,8 @@
       "matches": ["<all_urls>"],
       "js": [
         "lib/voice-processor.js",
+        "lib/storage-manager.js",
+        "lib/gemini-llm.js",
         "lib/field-mapper.js",
         "content/form-detector.js",
         "content/form-filler.js",
